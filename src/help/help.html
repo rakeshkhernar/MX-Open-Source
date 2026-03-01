@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MX - Help</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-48.svg">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --border: #475569;
+      --shadow: rgba(0, 0, 0, 0.35);
+      --text-muted: #64748b;
+      --radius: 12px;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      padding: 32px 20px;
+    }
+    
+    .page-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Header */
+    header {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      margin-bottom: 32px;
+      box-shadow: 0 12px 40px var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s ease;
+    }
+
+    header:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 56px var(--shadow), 0 0 40px rgba(59, 130, 246, 0.12);
+      border-color: var(--accent);
+    }
+
+    @keyframes logoEntry {
+      from { opacity: 0; transform: scale(0.4) rotate(-15deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    @keyframes headingEntry {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .logo-mark {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      animation: logoEntry 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.15s both;
+    }
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      animation: headingEntry 0.5s ease-out 0.35s both;
+    }
+    
+    .tagline {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      animation: headingEntry 0.5s ease-out 0.5s both;
+    }
+    
+    /* Main Content */
+    .content {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 40px var(--shadow);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    h2::before {
+      content: "";
+      width: 6px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      border-radius: 3px;
+    }
+    
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 24px 0 12px;
+    }
+    
+    p {
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+    
+    section {
+      margin-bottom: 16px;
+    }
+    
+    section:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Indicators & Pattern Sliders */
+    .indicators-grid,
+    .pattern-grid {
+      display: flex;
+      gap: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+
+    .indicators-grid::-webkit-scrollbar,
+    .pattern-grid::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .indicators-grid::-webkit-scrollbar-track,
+    .pattern-grid::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+      border-radius: 3px;
+    }
+
+    .indicators-grid::-webkit-scrollbar-thumb,
+    .pattern-grid::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .pattern-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      scroll-snap-align: start;
+      flex: 0 0 240px;
+    }
+
+    .pattern-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      border-color: var(--accent);
+    }
+
+    .pattern-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .pattern-desc {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    
+    .indicator-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      scroll-snap-align: start;
+      flex: 0 0 280px;
+    }
+    
+    .indicator-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      border-color: var(--accent);
+    }
+    
+    .indicator-icon {
+      font-size: 48px;
+      flex-shrink: 0;
+      display: block;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .indicator-text {
+      flex: 1;
+    }
+    
+    .indicator-label {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    
+    .indicator-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    
+    /* Features List */
+    .features-list {
+      display: grid;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    
+    .feature-item {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .feature-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: var(--accent);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    }
+    
+    .feature-icon {
+      font-size: 32px;
+      line-height: 1;
+    }
+    
+    .feature-content h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+    
+    .feature-content p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    /* FAQ Section */
+    .faq-item {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--accent);
+      transition: box-shadow 0.3s, background 0.3s;
+    }
+    
+    .faq-item:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      background: rgba(51, 65, 85, 0.8);
+    }
+    
+    .faq-question {
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--text-primary);
+      cursor: pointer;
+      list-style: none;
+      margin: 0;
+      outline: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .faq-question::-webkit-details-marker,
+    .faq-question::marker {
+      display: none;
+      content: '';
+    }
+
+    .faq-question:focus {
+      outline: none;
+    }
+
+    .faq-question:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .faq-question::before {
+      content: '▸';
+      display: inline-block;
+      margin-right: 8px;
+      transition: transform 0.2s;
+      color: var(--text-muted);
+    }
+
+    .faq-item[open] .faq-question::before {
+      transform: rotate(90deg);
+    }
+    
+    .faq-item[open] .faq-question {
+      margin-bottom: 12px;
+    }
+    
+    .faq-answer {
+      color: var(--text-secondary);
+      margin: 0;
+      font-size: 15px;
+    }
+
+    /* Accordion Sections */
+    details.accordion > summary {
+      cursor: pointer;
+      list-style: none;
+      display: block;
+      background: transparent;
+      border: none;
+      padding: 0;
+      outline: none;
+    }
+
+    details.accordion > summary:focus-visible h2 {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    details.accordion > summary::-webkit-details-marker,
+    details.accordion > summary::marker {
+      display: none;
+      content: '';
+    }
+
+    details.accordion > summary h2 {
+      margin: 0;
+    }
+
+    details.accordion > summary h2::before {
+      content: '▸';
+      display: inline-block;
+      width: auto;
+      height: auto;
+      background: none;
+      border-radius: 0;
+      margin-right: 10px;
+      transition: transform 0.2s;
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    details.accordion[open] > summary h2::before {
+      transform: rotate(90deg);
+    }
+
+    details.accordion[open] > summary {
+      margin-bottom: 16px;
+    }
+
+    details.accordion > summary + * {
+      margin-top: 0;
+    }
+
+    /* Settings preview */
+    .settings-preview {
+      background: var(--bg-primary);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .settings-preview-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.4);
+    }
+
+    .settings-preview-row:last-child {
+      border-bottom: none;
+    }
+
+    .settings-preview-label {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .settings-preview-value {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    /* Code/Inline Elements */
+    code {
+      background: #0b1220;
+      color: #93c5fd;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+    
+    strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 16px 20px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    footer p {
+      margin-bottom: 4px;
+    }
+
+    footer p:last-child {
+      margin-bottom: 0;
+    }
+    
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    
+    footer a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+    
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+      
+      .tagline {
+        font-size: 13px;
+      }
+      
+      .content {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header>
+      <div class="header-content">
+        <svg class="logo-mark" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1E293B"/><stop offset="100%" stop-color="#0F172A"/></linearGradient></defs>
+          <rect width="128" height="128" rx="22" fill="url(#bg)"/>
+          <path d="M 18 103 A 53 53 0 0 1 30 36" fill="none" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+          <path d="M 30 36 A 53 53 0 0 1 98 36" fill="none" stroke="#FBBF24" stroke-width="12" stroke-linecap="round"/>
+          <path d="M 98 36 A 53 53 0 0 1 110 103" fill="none" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+          <line x1="64" y1="77" x2="32" y2="59" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="64" cy="77" r="7" fill="#E2E8F0"/>
+        </svg>
+        <h1>Manipulation Index</h1>
+        <p class="tagline">Help &amp; Guide</p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- What is MX -->
+      <section>
+        <details class="accordion">
+          <summary><h2>What is MX?</h2></summary>
+        <p>MX (Manipulation Index) is a browser extension that surfaces sentiment, tone, and manipulation signals in the text you read. It runs entirely in your browser — no data ever leaves your device.</p>
+        <p>MX combines three layers of analysis into a single at-a-glance gauge: <strong>word-level sentiment</strong> (positive/negative vocabulary), <strong>tone signals</strong> (emotional patterns like hostility, alarm, warmth, optimism), and <strong>manipulation detection</strong> (fear framing, urgency pressure, divisive rhetoric, and structural persuasion patterns like slippery slopes, false dichotomies, and strawman framing). Over 2,700 pattern detectors in total.</p>
+        <p>Use it as a well-informed second opinion — it flags patterns, not truth.</p>
+        </details>
+      </section>
+
+      <!-- How It Works -->
+      <section>
+        <details class="accordion">
+          <summary><h2>How It Works</h2></summary>
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-icon">👁️</div>
+            <div class="feature-content">
+              <h3>Automatic Analysis</h3>
+              <p>MX samples visible text and scores sentiment, tone signals, and manipulation patterns in real-time as you browse. Headlines count 5× more than body text. Quoted text is discounted 80%. Shopping sites, recipes, and sports scores are recognized to avoid false alarms.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">🎭</div>
+            <div class="feature-content">
+              <h3>Tone Signals</h3>
+              <p>Detects emotional tone patterns — both negative (hostility, alarm, distress, contempt) and positive (admiration, warmth, optimism, celebration). Tone signals can override word-level sentiment when they strongly disagree.</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <div class="feature-content">
+              <h3>Manipulation Detection</h3>
+              <p>Flags urgency pressure, fear framing, divisive rhetoric, and emotional push language. If multiple patterns cross a threshold, the content is flagged as manipulative.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-content">
+              <h3>On-Page Gauge</h3>
+              <p>A small gauge indicator appears in the corner of every page — green for positive, yellow for neutral, red for negative. The needle position shows sentiment strength. Click it for a quick summary, then hit the chart icon for the full MX Report breakdown. <strong>Drag it</strong> anywhere you like — your position is saved across tabs.</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🍩</div>
+            <div class="feature-content">
+              <h3>Dual-Ring Donut Chart</h3>
+              <p>The MX Report shows a dual-ring visualization: the outer ring displays positive signals (admiration, warmth, optimism, celebration) and the inner ring shows negative and manipulation signals. Ring fill is proportional to signal count.</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">🔍</div>
+            <div class="feature-content">
+              <h3>Full Transparency</h3>
+              <p>Click any category chip or donut segment in the MX Report to see the exact words and phrases that were matched. Every rating has visible datapoints behind it — no black box.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">⚙️</div>
+            <div class="feature-content">
+              <h3>Customizable</h3>
+              <p>Adjust size, opacity, position, and site exclusions. Set manipulation sensitivity to low (fewer alerts), medium (balanced), or high (catches borderline cases). Right-click the extension icon and choose "Options" to open settings.</p>
+            </div>
+          </div>
+        </div>
+        </details>
+      </section>
+
+      <!-- Understanding the Indicators -->
+      <section>
+        <details class="accordion">
+          <summary><h2>Understanding the Indicators</h2></summary>
+        <p>MX uses a gauge meter on every page to show the overall tone. The needle swings from green (positive) through yellow (neutral) to red (negative). A red warning badge appears when manipulation patterns are detected. Here's what each level means:</p>
+        
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <span class="indicator-icon">
+              <svg width="48" height="48" viewBox="0 0 128 128">
+                <rect width="128" height="128" rx="22" fill="#172033"/>
+                <path d="M 18 103 A 53 53 0 0 1 30 36" fill="none" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 30 36 A 53 53 0 0 1 98 36" fill="none" stroke="#FBBF24" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 98 36 A 53 53 0 0 1 110 103" fill="none" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+                <line x1="64" y1="77" x2="32" y2="59" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round"/>
+                <circle cx="64" cy="77" r="7" fill="#E2E8F0"/>
+              </svg>
+            </span>
+            <div class="indicator-text">
+              <div class="indicator-label">Positive</div>
+              <p class="indicator-desc">Content with uplifting, encouraging, or optimistic tone. Confirmed by positive tone signals like admiration, warmth, and celebration.</p>
+            </div>
+          </div>
+          
+          <div class="indicator-card">
+            <span class="indicator-icon">
+              <svg width="48" height="48" viewBox="0 0 128 128">
+                <rect width="128" height="128" rx="22" fill="#172033"/>
+                <path d="M 18 103 A 53 53 0 0 1 30 36" fill="none" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 30 36 A 53 53 0 0 1 98 36" fill="none" stroke="#FBBF24" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 98 36 A 53 53 0 0 1 110 103" fill="none" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+                <line x1="64" y1="77" x2="64" y2="40" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round"/>
+                <circle cx="64" cy="77" r="7" fill="#E2E8F0"/>
+              </svg>
+            </span>
+            <div class="indicator-text">
+              <div class="indicator-label">Neutral Tone</div>
+              <p class="indicator-desc">No manipulation techniques detected. Minimal emotional signals — but neutral tone doesn't guarantee accuracy.</p>
+            </div>
+          </div>
+          
+          <div class="indicator-card">
+            <span class="indicator-icon">
+              <svg width="48" height="48" viewBox="0 0 128 128">
+                <rect width="128" height="128" rx="22" fill="#172033"/>
+                <path d="M 18 103 A 53 53 0 0 1 30 36" fill="none" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 30 36 A 53 53 0 0 1 98 36" fill="none" stroke="#FBBF24" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 98 36 A 53 53 0 0 1 110 103" fill="none" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+                <line x1="64" y1="77" x2="96" y2="59" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round"/>
+                <circle cx="64" cy="77" r="7" fill="#E2E8F0"/>
+              </svg>
+            </span>
+            <div class="indicator-text">
+              <div class="indicator-label">Negative</div>
+              <p class="indicator-desc">Content with hostile, alarming, or distressing tone. Tone signals such as hostility, alarm, and distress reinforce this classification.</p>
+            </div>
+          </div>
+          
+          <div class="indicator-card">
+            <span class="indicator-icon">
+              <svg width="48" height="48" viewBox="0 0 128 128">
+                <rect width="128" height="128" rx="22" fill="#172033"/>
+                <path d="M 18 103 A 53 53 0 0 1 30 36" fill="none" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 30 36 A 53 53 0 0 1 98 36" fill="none" stroke="#FBBF24" stroke-width="12" stroke-linecap="round"/>
+                <path d="M 98 36 A 53 53 0 0 1 110 103" fill="none" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+                <line x1="64" y1="77" x2="100" y2="89" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round"/>
+                <circle cx="64" cy="77" r="7" fill="#E2E8F0"/>
+                <circle cx="104" cy="24" r="16" fill="#EF4444"/>
+                <text x="104" y="31" text-anchor="middle" fill="white" font-size="22" font-weight="700" font-family="system-ui, sans-serif">!</text>
+              </svg>
+            </span>
+            <div class="indicator-text">
+              <div class="indicator-label">Manipulative</div>
+              <p class="indicator-desc">Strong manipulation patterns detected — fear framing, urgency pressure, or divisive rhetoric. Read critically and check other sources.</p>
+            </div>
+          </div>
+        </div>
+        </details>
+      </section>
+
+      <!-- Tone Signals -->
+      <section>
+        <details class="accordion">
+          <summary><h2>Tone Signals</h2></summary>
+        <p>Tone signals bridge the gap between individual word sentiment and full manipulation patterns. They detect emotional overtones in the content:</p>
+        
+        <h3>Negative Tone Signals</h3>
+        <div class="pattern-grid">
+          <div class="pattern-card" style="border-left-color: #ef4444">
+            <div class="pattern-title">Hostility</div>
+            <div class="pattern-desc">Violence, aggression, war, conflict, anger — language of confrontation and harm.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #f59e0b">
+            <div class="pattern-title">Alarm</div>
+            <div class="pattern-desc">Crisis, danger, threat, collapse, devastation — language that creates a sense of emergency.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #06b6d4">
+            <div class="pattern-title">Distress</div>
+            <div class="pattern-desc">Death, suffering, grief, loss, trauma — language of pain and despair.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #a855f7">
+            <div class="pattern-title">Contempt</div>
+            <div class="pattern-desc">Disgust, corruption, scandal, failure, betrayal — language of moral judgement and disdain.</div>
+          </div>
+        </div>
+
+        <h3>Positive Tone Signals</h3>
+        <div class="pattern-grid">
+          <div class="pattern-card" style="border-left-color: #f59e0b">
+            <div class="pattern-title">Admiration</div>
+            <div class="pattern-desc">Praise, excellence, triumph, inspiration — language of respect and awe.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #ec4899">
+            <div class="pattern-title">Warmth</div>
+            <div class="pattern-desc">Love, kindness, compassion, gratitude — language of care and connection.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #22c55e">
+            <div class="pattern-title">Optimism</div>
+            <div class="pattern-desc">Hope, progress, improvement, recovery — language of possibility and growth.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #8b5cf6">
+            <div class="pattern-title">Celebration</div>
+            <div class="pattern-desc">Joy, happiness, delight, humor — language of festivity and shared excitement.</div>
+          </div>
+        </div>
+        </details>
+      </section>
+
+      <!-- Manipulation Patterns -->
+      <section>
+        <details class="accordion">
+          <summary><h2>Manipulation Pattern Types</h2></summary>
+        <p>Unlike tone signals (which detect emotional language that may be perfectly legitimate), manipulation patterns flag language specifically designed to bypass critical thinking. MX uses both vocabulary matching and structural regex patterns to detect these — including slippery slope arguments, false dichotomies, strawman framing, whataboutism, gaslighting patterns, emotional blackmail, and bandwagon pressure:</p>
+        <div class="pattern-grid">
+          <div class="pattern-card" style="border-left-color: #ef4444">
+            <div class="pattern-title">Fear-based</div>
+            <div class="pattern-desc">Alarmist framing designed to trigger anxiety, panic, or dread in the reader.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #a855f7">
+            <div class="pattern-title">Divisive</div>
+            <div class="pattern-desc">"Us vs. them" framing, group vilification, or dehumanizing language.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #f59e0b">
+            <div class="pattern-title">Urgency</div>
+            <div class="pattern-desc">Time pressure designed to short-circuit deliberation and provoke impulsive action.</div>
+          </div>
+          <div class="pattern-card" style="border-left-color: #3b82f6">
+            <div class="pattern-title">Emotional</div>
+            <div class="pattern-desc">Language that pushes outrage or indignation to bypass reasoning and override judgement.</div>
+          </div>
+        </div>
+        </details>
+      </section>
+
+      <!-- Tips & Tricks -->
+      <section>
+        <details class="accordion">
+          <summary><h2>Tips &amp; Tricks</h2></summary>
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="feature-icon">👆</div>
+            <div class="feature-content">
+              <h3>Drag the Gauge</h3>
+              <p>The gauge indicator can be dragged anywhere on the page. Your chosen position is saved and synced across all your tabs.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔍</div>
+            <div class="feature-content">
+              <h3>See the Evidence</h3>
+              <p>Click any category chip or donut segment in the MX Report to see the exact words that matched. Every score is backed by visible datapoints.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🚫</div>
+            <div class="feature-content">
+              <h3>Disable per Site</h3>
+              <p>Click the gauge and use the tooltip to disable MX on specific sites, or add domains to the exclusion list in Settings.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">⚙️</div>
+            <div class="feature-content">
+              <h3>Customize Everything</h3>
+              <p>Right-click the extension icon → "Options" to adjust indicator size (32-256px), opacity, position, and manipulation sensitivity (low/medium/high).</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📰</div>
+            <div class="feature-content">
+              <h3>Compare Sources</h3>
+              <p>Open the same story on two different news sites. MX will show you how each one frames the narrative differently.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🧠</div>
+            <div class="feature-content">
+              <h3>Tone ≠ Truth</h3>
+              <p>A negative tone doesn't mean content is wrong. War coverage is legitimately distressing. MX shows <em>how</em> something is said, not whether it's true.</p>
+            </div>
+          </div>
+        </div>
+        </details>
+      </section>
+
+      <!-- Settings Overview -->
+      <section>
+        <details class="accordion">
+          <summary><h2>Settings Overview</h2></summary>
+          <p>Open settings via right-click → "Options" on the MX extension icon.</p>
+          <p>Drag the indicator to reposition it — your position overrides the default corner setting and persists across sessions.</p>
+        </details>
+      </section>
+
+      <!-- FAQ -->
+      <section>
+        <details class="accordion">
+          <summary><h2>Frequently Asked Questions</h2></summary>
+        
+          <details class="faq-item">
+            <summary class="faq-question">Is my browsing data collected?</summary>
+            <p class="faq-answer">No. All analysis runs locally in your browser. No text, scores, or browsing data is ever sent to external servers.</p>
+          </details>
+        
+          <details class="faq-item">
+            <summary class="faq-question">What does "manipulative" mean?</summary>
+            <p class="faq-answer">It means multiple manipulation patterns (fear framing, urgency pressure, divisive rhetoric) were detected above a proportional threshold. It does not imply the content is factually false.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Why does a news site show negative when the writing seems professional?</summary>
+            <p class="faq-answer">Tone signals detect the emotional content of what's being reported, not the writing quality. A well-written article about war, violence, and crisis will correctly show negative tone — because the subject matter is negative.</p>
+          </details>
+        
+          <details class="faq-item">
+            <summary class="faq-question">What are tone signals?</summary>
+            <p class="faq-answer">Tone signals are emotional patterns detected in the text — eight categories covering both negative (hostility, alarm, distress, contempt) and positive (admiration, warmth, optimism, celebration) tones. When they strongly disagree with word-level sentiment, they correct the overall score.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">How accurate is MX?</summary>
+            <p class="faq-answer">MX has been validated against 100+ real websites across news, social media, tech, sports, shopping, and entertainment categories. It reliably catches manipulation patterns, tone shifts, and sentiment direction. Like any analysis tool, it works best as a second opinion alongside your own judgement.</p>
+          </details>
+        
+          <details class="faq-item">
+            <summary class="faq-question">Can I see what words triggered each score?</summary>
+            <p class="faq-answer">Yes! Click any chip or donut segment in the MX Report breakdown to expand the matched words. Full transparency — no black box.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Why does some content show "low confidence"?</summary>
+            <p class="faq-answer">Confidence depends on how much text was analyzed and how many signals were found. Pages with very little text (image-heavy sites, login screens) naturally have less data to work with.</p>
+          </details>
+        
+          <details class="faq-item">
+            <summary class="faq-question">Can I disable MX on certain sites?</summary>
+            <p class="faq-answer">Yes. Click the gauge and use the tooltip to disable on the current site, or go to Settings → Disabled Sites and add domains manually.</p>
+          </details>
+        </details>
+      </section>
+
+      <!-- Critical Reading -->
+      <section>
+        <details class="accordion">
+          <summary><h2>Tips for Critical Reading</h2></summary>
+          <p><strong>Verify claims:</strong> Look for primary sources and independent corroboration.</p>
+          <p><strong>Check context:</strong> Dates, scope, and framing often change meaning.</p>
+          <p><strong>Compare coverage:</strong> Open the same story on multiple sites and compare MX scores.</p>
+          <p><strong>Notice strong reactions:</strong> If something triggers a strong emotional response, take a moment to re-read before sharing or reacting.</p>
+          <p><strong>Commercial ≠ manipulative:</strong> Shopping sites using "limited time offer" is expected marketing, not manipulation.</p>
+        </details>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>MX - Manipulation Index</p>
+      <p>Read critically. Think independently. Stay informed.</p>
+    </footer>
+  </div>
+
+  <script src="help.js"></script>
+</body>
+</html>

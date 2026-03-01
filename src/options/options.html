@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MX - Settings</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/icon-48.svg">
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #475569;
+      --radius: 8px;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    
+    .section {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .section-title svg {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+    }
+    
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--bg-tertiary);
+    }
+    
+    .setting-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    .setting-row:first-of-type {
+      padding-top: 0;
+    }
+    
+    .setting-info {
+      flex: 1;
+      padding-right: 16px;
+    }
+    
+    .setting-label {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    
+    .setting-description {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    /* Toggle Switch */
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+    
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-tertiary);
+      border-radius: 26px;
+      transition: 0.3s;
+    }
+    
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    
+    .toggle input:checked + .toggle-slider {
+      background: var(--accent);
+    }
+    
+    .toggle input:checked + .toggle-slider:before {
+      transform: translateX(22px);
+    }
+    
+    .toggle input:focus + .toggle-slider {
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    
+    /* Select */
+    select {
+      appearance: none;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-primary);
+      padding: 8px 32px 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    
+    select:hover {
+      border-color: var(--accent);
+    }
+    
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* Range Slider */
+    .range-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 120px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--bg-tertiary);
+      outline: none;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: var(--accent-hover);
+      transform: scale(1.1);
+    }
+    
+    .range-value {
+      min-width: 36px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
+    /* Button */
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+    
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--border);
+    }
+    
+    .button-row {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+    
+    /* Status message */
+    .status {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--success);
+      color: white;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      font-weight: 500;
+      opacity: 0;
+      transition: 0.3s;
+    }
+    
+    .status.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+    
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <svg class="logo" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1E293B"/><stop offset="100%" stop-color="#0F172A"/></linearGradient></defs>
+        <rect width="128" height="128" rx="22" fill="url(#bg)"/>
+        <path d="M 18 103 A 53 53 0 0 1 30 36" fill="none" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+        <path d="M 30 36 A 53 53 0 0 1 98 36" fill="none" stroke="#FBBF24" stroke-width="12" stroke-linecap="round"/>
+        <path d="M 98 36 A 53 53 0 0 1 110 103" fill="none" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+        <line x1="64" y1="77" x2="32" y2="59" stroke="#E2E8F0" stroke-width="4.5" stroke-linecap="round"/>
+        <circle cx="64" cy="77" r="7" fill="#E2E8F0"/>
+      </svg>
+      <h1>Manipulation Index</h1>
+      <p class="subtitle">Settings & Preferences</p>
+    </header>
+    
+    <div class="section">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+        </svg>
+        Display
+      </h2>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Enable MX</div>
+          <div class="setting-description">Turn MX analysis on or off for all pages</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="showIndicator" checked aria-label="Enable MX">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Show On-page Gauge</div>
+          <div class="setting-description">Hide the floating gauge while keeping analysis and popup active</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="showOnPageIndicator" checked aria-label="Show On-page Gauge">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Indicator Position</div>
+          <div class="setting-description">Where to show the indicator on the page</div>
+        </div>
+        <select id="indicatorPosition" aria-label="Indicator Position">
+          <option value="bottom-right">Bottom Right</option>
+          <option value="bottom-left">Bottom Left</option>
+          <option value="top-right">Top Right</option>
+          <option value="top-left">Top Left</option>
+        </select>
+      </div>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Indicator Size</div>
+          <div class="setting-description">Size of the floating indicator</div>
+        </div>
+        <div class="range-container">
+          <input type="range" id="indicatorSize" min="32" max="256" value="48" aria-label="Indicator Size">
+          <span class="range-value" id="indicatorSizeValue">48px</span>
+        </div>
+      </div>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Indicator Opacity</div>
+          <div class="setting-description">Transparency of the indicator when idle</div>
+        </div>
+        <div class="range-container">
+          <input type="range" id="indicatorOpacity" min="5" max="100" value="80" aria-label="Indicator Opacity">
+          <span class="range-value" id="indicatorOpacityValue">80%</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Analysis
+      </h2>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Manipulation Alerts</div>
+          <div class="setting-description">Show prominent warnings for manipulative content</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="manipulationAlerts" checked aria-label="Manipulation Alerts">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Sensitivity</div>
+          <div class="setting-description">How sensitive the manipulation detection should be</div>
+        </div>
+        <select id="sensitivity" aria-label="Sensitivity">
+          <option value="low">Low - Only obvious manipulation</option>
+          <option value="medium" selected>Medium - Balanced</option>
+          <option value="high">High - More cautious</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+        </svg>
+        Exclusions
+      </h2>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-label">Disabled Sites</div>
+          <div class="setting-description">Sites where MX won't run (one per line)</div>
+        </div>
+      </div>
+      <textarea id="disabledSites" aria-label="Disabled Sites" placeholder="example.com&#10;another-site.org" style="
+        width: 100%;
+        height: 100px;
+        margin-top: 12px;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        color: var(--text-primary);
+        padding: 12px;
+        font-family: monospace;
+        font-size: 13px;
+        resize: vertical;
+      "></textarea>
+    </div>
+    
+    <div class="button-row">
+      <button class="btn btn-secondary" id="resetBtn">Reset to Defaults</button>
+    </div>
+  </div>
+  
+  <footer>
+    <p>Manipulation Index v1.3.0</p>
+    <p style="margin-top: 8px;">
+      <a href="../help/help.html" id="helpLink">Help & Guide</a>
+    </p>
+  </footer>
+  
+  <div class="status" id="status">Settings saved!</div>
+  
+  <script src="../shared/shared.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "mx",
+  "version": "1.3.0",
+  "description": "Manipulation Index (MX) - Browser extension that analyzes and displays content manipulation levels",
+  "type": "module",
+  "scripts": {
+    "bundle": "node scripts/bundle.js",
+    "bundle:prod": "node scripts/bundle.js --prod",
+    "clean": "rm -rf dist",
+    "build:chrome": "node scripts/bundle.js --prod && node scripts/build.js chrome",
+    "build:firefox": "node scripts/bundle.js --prod && node scripts/build.js firefox",
+    "build:edge": "node scripts/bundle.js --prod && node scripts/build.js edge"
+  },
+  "keywords": [
+    "browser-extension",
+    "sentiment-analysis",
+    "chrome",
+    "firefox",
+    "edge"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "puppeteer": "^24.36.0",
+    "web-ext": "^9.2.0"
+  }
+}
