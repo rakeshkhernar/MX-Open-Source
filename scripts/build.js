@@ -115,7 +115,25 @@ function adjustManifest(manifest, browser) {
   if (adjusted.action?.default_popup) {
     adjusted.action.default_popup = 'popup/popup.html';
   }
-  
+
+  // Chrome and Edge do not support SVG extension icons — use PNGs only
+  if (browser === 'chrome' || browser === 'edge') {
+    const svgToPng = (val) => (typeof val === 'string' ? val.replace(/\.svg$/, '.png') : val);
+    if (adjusted.icons) {
+      adjusted.icons = Object.fromEntries(
+        Object.entries(adjusted.icons).map(([k, v]) => [k, svgToPng(v)])
+      );
+    }
+    if (adjusted.action?.default_icon) {
+      adjusted.action = {
+        ...adjusted.action,
+        default_icon: Object.fromEntries(
+          Object.entries(adjusted.action.default_icon).map(([k, v]) => [k, svgToPng(v)])
+        )
+      };
+    }
+  }
+
   return adjusted;
 }
 
