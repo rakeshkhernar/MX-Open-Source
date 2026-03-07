@@ -194,6 +194,12 @@ function init() {
     }
   });
 
+  // Inject version from manifest so it stays in sync automatically
+  const versionEl = document.getElementById('appVersion');
+  if (versionEl && typeof chrome !== 'undefined' && chrome.runtime?.getManifest) {
+    versionEl.textContent = `Manipulation Index v${chrome.runtime.getManifest().version}`;
+  }
+
   // Load settings on page load
   loadSettings();
 }

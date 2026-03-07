@@ -1,18 +1,18 @@
 {
   "manifest_version": 3,
   "name": "Manipulation Index",
-  "version": "1.3.0",
+  "version": "1.3.3",
   "description": "Analyzes and displays the manipulation level of web content",
-  
   "browser_specific_settings": {
     "gecko": {
       "id": "mx@manipulation-index",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     }
   },
-  
   "action": {
     "default_icon": {
       "16": "icons/icon-16.svg",
@@ -22,28 +22,29 @@
     "default_title": "Manipulation Index (MX)",
     "default_popup": "src/popup/popup.html"
   },
-  
   "options_ui": {
     "page": "src/options/options.html",
     "open_in_tab": true
   },
-  
   "background": {
     "service_worker": "src/background/background.js",
     "type": "module"
   },
-  
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "js": ["src/content/content-bundle.js"],
-    "run_at": "document_idle"
-  }],
-  
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/content/content-bundle.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
   "permissions": [
     "activeTab",
     "storage"
   ],
-  
   "icons": {
     "16": "icons/icon-16.svg",
     "48": "icons/icon-48.svg",

@@ -1,6 +1,6 @@
 {
   "name": "mx",
-  "version": "1.3.0",
+  "version": "1.3.3",
   "description": "Manipulation Index (MX) - Browser extension that analyzes and displays content manipulation levels",
   "type": "module",
   "scripts": {
